@@ -1,23 +1,39 @@
-# Tutorial: Uso del Notebook para el Modelo de Vegetación, Presas y Depredadores
+# Tutorial Práctico: Simulación de Dinámicas Ecológicas con `Vegetacion.ipynb`  
 
-## Introducción
+Este código modela la interacción entre vegetación, presas y depredadores usando ecuaciones diferenciales. **Pasos para usarlo**:  
 
-Este documento presenta un tutorial detallado en español para entender y utilizar el notebook que implementa un modelo de interacción ecológica. En este notebook se simulan dos modelos:
+1. **Prepara el entorno**:  
+   - Asegúrate de tener instaladas las bibliotecas `numpy`, `matplotlib` y `scipy`. Si no las tienes, instálalas con:  
+     ```bash  
+     pip install numpy matplotlib scipy  
+     ```  
 
-- **Modelo Lotka–Volterra**: Considera la interacción entre presas y depredadores.
-- **Modelo Extendido**: Incorpora además la dinámica de la vegetación.
+2. **Modifica parámetros (opcional)**:  
+   - Los valores predeterminados están definidos al inicio (ej: `alpha = 0.8`, `beta = 0.05`). Cámbialos según el escenario que quieras simular. Por ejemplo:  
+     - Aumentar `alpha` acelera el crecimiento de la vegetación.  
+     - Reducir `zeta` ralentiza el crecimiento de depredadores.  
 
-Asimismo, se incluye un análisis de estabilidad a través del cálculo del Jacobiano y la evaluación de sus valores propios.
+3. **Ejecuta el código**:  
+   - Al correr todo el script (en un entorno como Jupyter Notebook o Python), se calculan dos modelos:  
+     - **Modelo clásico Lotka-Volterra**: Solo presas (`P`) y depredadores (`D`), con vegetación constante.  
+     - **Modelo extendido**: Incluye la dinámica de vegetación (`V`).  
 
-## Requerimientos e Instalación
+4. **Resultados gráficos**:  
+   - Se generan dos imágenes:  
+     - **`Lotka_Volterra.png`**: Muestra la evolución temporal de las poblaciones.  
+       - **Líneas continuas**: Modelo extendido (vegetación + presas + depredadores).  
+       - **Líneas discontinuas (`--`)**: Modelo clásico (solo presas y depredadores).  
+       - **Líneas punteadas (`:`)**: Valores de equilibrio teóricos.  
+     - **`stability.png`**: Mapa de estabilidad de los puntos de equilibrio (regiones violeta = estables, celeste = inestables).  
 
-Antes de ejecutar el notebook, asegúrate de tener instaladas las siguientes librerías de Python:
+5. **Personaliza la simulación**:  
+   - **Cambia el tiempo de simulación**: Modifica `t_span = (0, 1500)` para acortar o extender el periodo.  
+   - **Ajusta la resolución**: Usa `t_eval = np.linspace(*t_span, 1000)` (a mayor número, más puntos).  
+   - **Modifica condiciones iniciales**: Edita `V0, P0, D0 = alpha/gamma, 5, 2`.  
 
-- **NumPy**: Para operaciones matemáticas y manejo de arrays.
-- **Matplotlib**: Para la generación de gráficos.
-- **SciPy**: Para resolver ecuaciones diferenciales y calcular valores propios.
+6. **Interpreta las gráficas**:  
+   - **Oscilaciones**: Indican ciclos naturales entre presas y depredadores.  
+   - **Convergencia a líneas punteadas**: El sistema alcanza equilibrio estable.  
+   - **Caos o divergencia**: Parámetros no balanceados (requiere ajustar valores como `beta` o `epsilon`).  
 
-Si aún no las tienes, instálalas utilizando `pip`:
-
-```bash
-pip install numpy matplotlib scipy
+**Nota**: El análisis de estabilidad (`stability.png`) usa la matriz Jacobiana para evaluar si pequeños cambios en las poblaciones se amortiguan (estable) o crecen (inestable). Para profundizar, modifica las funciones `jacobian` y `stability` al final del código.  
